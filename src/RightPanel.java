@@ -99,48 +99,66 @@ public class RightPanel extends JPanel {
 			}
 		}
 		else {
-			// Lab Q3: Add code to consider image with larger height than width
-			for (int row=0; row<height; row++){
-				int diagonalRow = row;
-				for (int col=0; col<=row; col++) {
-					int pixelColor= leftImage.getRGB(col,diagonalRow);
-					img.setRGB(col, diagonalRow, pixelColor);
-					diagonalRow--;
+			
+				// Lab Q3: Add code to consider image with larger height than width
+				for (int col=0; col<width; col++){
+					int diagonalCol = col;
+					for (int row=0; row<=col; row++) {
+						int pixelColor= leftImage.getRGB(diagonalCol,row);
+						img.setRGB(diagonalCol, row, pixelColor);
+						diagonalCol--;
+					}
+					repaint();
+					try { Thread.sleep(10); } catch (InterruptedException e) { };
 				}
-				repaint();
-				try { Thread.sleep(10); } catch (InterruptedException e) { };
-			}
-			for (int i=0; i<(width-height); i++) {
-				int row = height-1;
-				int col = i+1;
-				for (int j=0; j<height; j++) {
-					int pixelColor= leftImage.getRGB(col,row);
-					img.setRGB(col, row, pixelColor);
-					col++; row--;
+				for (int i=0; i<(height-width); i++) {
+					int col = width-1;
+					int row = i+1;
+					for (int j=0; j<width; j++) {
+						int pixelColor= leftImage.getRGB(col,row);
+						img.setRGB(col, row, pixelColor);
+						col--; row++;
+					}
+					repaint();
+					try { Thread.sleep(10); } catch (InterruptedException e) { };
 				}
-				repaint();
-				try { Thread.sleep(10); } catch (InterruptedException e) { };
-			}
-			for (int i=0; i<=(width); i++) {
-				int diagonalRow = height-1;
-				for (int col=(width-height+i); col<width; col++) {
-					int pixelColor= leftImage.getRGB(col,diagonalRow);
-					img.setRGB(col, diagonalRow, pixelColor);
-					diagonalRow--;
-				}
-				repaint();
-				try { Thread.sleep(10); } catch (InterruptedException e) { };
-			}
+				for (int i=0; i<=(height); i++) {
+					int diagonalCol = width-1;
+					for (int row=(height-width+i); row<height; row++) {
+						int pixelColor= leftImage.getRGB(diagonalCol,row);
+						img.setRGB(diagonalCol, row, pixelColor);
+						diagonalCol--;
+					}
+					repaint();
+					try { Thread.sleep(10); } catch (InterruptedException e) { };
 			}
 		}
+	}
+	
 		public void transitionRandom(Graphics g, BufferedImage leftImage) {
 			int width = leftImage.getWidth();
 			int height = leftImage.getHeight();
 			
-			int random = new Random();
+			for(int i=0; i<=width*height; i++){
+				Random randNumber = new Random();
+				int x = randNumber.nextInt(width);
+				int y = randNumber.nextInt(height);
+				
+				int pixelColor = leftImage.getRGB(x, y);
+				img.setRGB(x, y, pixelColor);
+				repaint();
+	            
+			try { Thread.sleep(1); } catch (InterruptedException e) { };
+			}
+			
+			try { Thread.sleep(300); } catch (InterruptedException e) { };
+				
+		}
+		
+			
 			
 			
 			
 
 	}	
-}
+
